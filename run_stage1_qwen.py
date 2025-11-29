@@ -1,5 +1,3 @@
-# run_stage1_qwen.py
-
 from pathlib import Path
 
 from utils.data import load_math_lighteval_test

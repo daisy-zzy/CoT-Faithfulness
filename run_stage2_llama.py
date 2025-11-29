@@ -1,5 +1,3 @@
-# run_stage2_llama.py
-
 from pathlib import Path
 
 from utils.models import VLLMEngine
