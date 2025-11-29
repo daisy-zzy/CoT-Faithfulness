@@ -1,0 +1,7 @@
+vllm
+transformers
+datasets
+accelerate
+tqdm
+pyyaml
+gpustat
