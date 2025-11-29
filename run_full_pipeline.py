@@ -5,5 +5,5 @@ if __name__ == "__main__":
         qwen_name="Qwen/Qwen3-4B",
         llama_name="meta-llama/Llama-3.2-3B-Instruct",
         out_dir="outputs",
-        max_examples=8,  
+        max_examples=800,  
     )
