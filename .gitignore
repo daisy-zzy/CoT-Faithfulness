@@ -1,0 +1,74 @@
+# Python
+__pycache__/
+**/__pycache__/
+**/__pycache__/**
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Model cache
+.cache/
+models/
+*.bin
+*.safetensors
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Environment variables
+.env
+.env.local
+
+# HuggingFace cache
+.huggingface/
+
+# SLURM
+*.out
+*.err
+slurm-*.out
+slurm-*.err
+
+# Data files (if large)
+*.jsonl.bak
+*.jsonl.tmp
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Logs
+logs/

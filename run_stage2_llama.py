@@ -37,12 +37,15 @@ def run_stage2_llama(
     stage1_results = load_jsonl(in_path)
     print(f"[Stage 2] Loaded {len(stage1_results)} examples from {in_path}")
 
-    # 2. Run Llama as Model B
+    # 2. Run Llama as Model B (baseline only)
     llama_engine = VLLMEngine(llama_name)
-    final_results = run_llama_stage(llama_engine, stage1_results)
+    final_results = run_llama_stage(
+        llama_engine,
+        stage1_results,
+    )
 
     # 3. Save Stage 2 results
-    out_path = Path(out_dir) / "stage2_final.jsonl"
+    out_path = Path(out_dir) / "stage2_llama.jsonl"
     save_jsonl(out_path, final_results)
     print(f"[Stage 2] Saved {len(final_results)} examples to {out_path}")
 

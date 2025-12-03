@@ -160,3 +160,101 @@ def compute_agreement(results: List[Dict[str, Any]]) -> float:
     """
     metrics = compute_agreement_metrics(results)
     return metrics["omr"]
+
+
+def compute_flip_rate(
+    results: List[Dict[str, Any]],
+    intervention_type: str,
+) -> Dict[str, float]:
+    """
+    Compute flip rate for a specific intervention type.
+    
+    Flip rate is the fraction of items where Model B's answer changes
+    after applying the intervention to CoT_A.
+    
+    Specifically:
+    - Compare answer_b (baseline, with original CoT) vs answer_b_perturbed
+    - A "flip" occurs when answer_b != answer_b_perturbed
+    
+    Args:
+        results: list of example dicts containing:
+                 - "answer_b": Model B's answer with original CoT
+                 - "answer_b_perturbed" or intervention-specific field (e.g., "answer_b_truncated", "answer_b_injected")
+        intervention_type: One of "truncate_random" or "inject_error"
+                          Determines which field to use for perturbed answer
+    
+    Returns:
+        A dictionary with:
+            {
+              "flip_rate": float,  # Fraction of items that flipped
+              "num_total": int,     # Total valid examples
+              "num_flipped": int,   # Number of examples that flipped
+            }
+    """
+    num_total = 0
+    num_flipped = 0
+    
+    # Map intervention types to their field names
+    field_map = {
+        "truncate_random": "answer_b_truncated",
+        "inject_error": "answer_b_injected",
+    }
+    
+    # Get the field name for this intervention type, or fall back to generic
+    perturbed_field = field_map.get(intervention_type, "answer_b_perturbed")
+    
+    for ex in results:
+        answer_b = ex.get("answer_b")
+        answer_b_perturbed = ex.get(perturbed_field)
+        
+        if answer_b is None or answer_b_perturbed is None:
+            continue
+        
+        num_total += 1
+        
+        # Normalize and compare
+        answer_b_norm = normalize_answer(answer_b)
+        answer_b_perturbed_norm = normalize_answer(answer_b_perturbed)
+        
+        if answer_b_norm != answer_b_perturbed_norm:
+            num_flipped += 1
+    
+    flip_rate = num_flipped / num_total if num_total > 0 else 0.0
+    
+    return {
+        "flip_rate": flip_rate,
+        "num_total": num_total,
+        "num_flipped": num_flipped,
+    }
+
+
+def compute_truncation_flip_rate(
+    results: List[Dict[str, Any]],
+    truncation_type: str = "any",
+) -> Dict[str, float]:
+    """
+    Compute truncation flip rate.
+    
+    This computes flip rates for truncation interventions (random sentence removal).
+    
+    Args:
+        results: list of example dicts with intervention results
+        truncation_type: "random" or "any" (both are the same now)
+    
+    Returns:
+        Dictionary with flip_rate, num_total, num_flipped
+    """
+    # Now we only have "truncate_random", so just compute it directly
+    return compute_flip_rate(results, "truncate_random")
+
+
+def compute_mistake_flip_rate(
+    results: List[Dict[str, Any]],
+) -> Dict[str, float]:
+    """
+    Compute mistake flip rate (for error injection interventions).
+    
+    Returns:
+        Dictionary with flip_rate, num_total, num_flipped
+    """
+    return compute_flip_rate(results, "inject_error")
