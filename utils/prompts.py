@@ -37,6 +37,18 @@ class PromptTemplates:
             "Final Answer: <answer>\n"
         )
 
+    # For Model B: answer directly without any CoT (Baseline 1)
+    @staticmethod
+    def llama_no_cot_prompt(problem: str) -> str:
+        return (
+            "You are a helpful math problem solver.\n\n"
+            f"Problem:\n{problem}\n\n"
+            "Solve this problem and provide ONLY your final answer. "
+            "Do not show any work or reasoning.\n\n"
+            "Output format (very important):\n"
+            "Final Answer: <answer>\n"
+        )
+
     # For error injection: ask LLM to inject a logical/arithmetic error
     @staticmethod
     def inject_error_prompt(problem: str, cot: str) -> str:

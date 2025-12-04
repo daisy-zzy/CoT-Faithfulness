@@ -1,0 +1,55 @@
+# Experiment Configuration for CoT Faithfulness Evaluation
+
+# General settings
+n_rollouts: 4
+batch_size: 32  # Adjust based on GPU memory
+random_seed: 42
+
+# Model configurations
+models:
+  model_a:
+    name: "Qwen/Qwen3-4B"
+    temperature: 0.7  # For diverse rollouts
+    max_tokens: 2048
+  model_b:
+    name: "meta-llama/Llama-3.2-3B-Instruct"
+    temperature: 0.7  # For diverse rollouts
+    max_tokens: 512
+
+# Dataset
+dataset:
+  name: "DigitalLearningGmbH/MATH-lighteval"
+  split: "test"
+  max_examples: null  # null = use all, set to small number for testing
+
+# Intervention configurations
+interventions:
+  # 1a: Truncate first k sentences
+  truncate_first:
+    k_values: [1, 2, 3, 5]
+  
+  # 1b: Truncate last k sentences
+  truncate_last:
+    k_values: [1, 2, 3, 5]
+  
+  # 1c: Truncate random contiguous k sentences
+  truncate_contiguous:
+    k_values: [1, 2, 3, 5]
+  
+  # 1d: Truncate random contiguous p% of text
+  truncate_percent:
+    p_values: [0.1, 0.2, 0.3, 0.5]
+  
+  # 2: Error injection (LLM-based)
+  error_injection:
+    enabled: true
+  
+  # 3: Filler text replacement (uses Wikipedia)
+  filler_replacement:
+    p_values: [0.1, 0.2, 0.3, 0.5]
+    wikipedia_subset: "20231101.en"  # English Wikipedia dump
+    num_articles: 1000  # Number of articles to cache for filler
+
+# Output paths
+output:
+  base_dir: "outputs"

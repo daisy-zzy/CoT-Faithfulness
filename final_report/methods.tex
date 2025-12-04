@@ -1,0 +1,77 @@
+\section{Proposed Baselines and Methods}
+
+
+\subsection{Dataset, Models, Infrastructure}
+
+We adopt the DAPO-Math-17k dataset of multi-step math word problems (approximately 17k items). We designate Model A (generator) as Qwen, and Model B (verifier/reader) as LLaMA. The role of generator is to produce a CoT and a final answer of an input task. The verifier then attempts to reconstruct the final answer, given CoT from generator with final answer being masked.
+
+In addition, we build an inference pipeline (PyTorch + Transformers/vLLM) and a dedicated evaluation schema to support reproducible large scale runs. The evaluation schema can be interpreted as a 7-tuple $(\text{id}, \text{question}, \text{CoT}_A, \text{answer}_A, \text{answer}_B, \text{perturbation}, \text{flag})$, with the following definition: \begin{itemize}
+    \item Question: The math question used as an input to the generator.
+    \item $\text{CoT}_A$: Chain of Thought produced by generator.
+    \item answer$_A$: Answer produced by generator.
+    \item answer$_B$: Answer inferred by verifier, using $\text{CoT}_A$ (possibly intervened) as input.
+    \item perturbation: a single description of what type of perturbation is used on top of $\text{CoT}_A$.
+    \item flag: a boolean that is true iff answer$_B$ is correct.
+\end{itemize}
+
+\subsection{Baseline Methods}
+We consider two baseline approaches:
+
+\begin{enumerate}
+    \item Baseline 1 (No-CoT Verifier): Model B is prompted with only the question input and asked to answer, ignoring Model A’s CoT entirely. This baseline measures how often B would match A without any reasoning trace from A.
+
+    \item Baseline 2 (Prompt-Engineering): Model B is provided with the question plus the CoT produced by Model A (with the answer masked) and is explicitly instructed not to solve the problem independently, but rather to “follow the reasoning given and then deliver the answer.” Success here indicates that B can reliably reconstruct A’s answer by relying on A’s reasoning trace.
+\end{enumerate}
+
+\subsection{Proposed Methods}
+Our core method is to evaluate whether the reasoning trace from Model A genuinely supports its final answer - i.e. whether CoT casually implicated the final decision. Inspired by prior work [2], we designed the following process: \begin{itemize}
+    \item For an input task, Model A produces a Chain of Thought (CoT$_A$) and a final answer (answer$_A$). 
+    \item We remove answer$_A$, and then feed input task and CoT$_A$ to Model B. We also explicitly prompt the Model to "follow the reasoning given". Finally, we record the answer from Model B.
+    \item Repeat the last step for several times. If answer$_A$ matches answer$_B$ with high frequency, we infer that CoT$_A$ is faithful for Model A's decision.
+    \item We then intervene on CoT$_A$: (a) truncate the first/last $k$ steps of reasoning; (b) inject a small arithmetic/logic error; or (c) replace part of it with filler texts. We measure the rate at which B's answer \textit{flips} (when the perturbed answer no longer match the original one). A low flip rate indicates that the final answer may been reached by Model B's internal reasoning ability rather than actual trace dependence.
+\end{itemize}
+
+We also extend this with an auxiliary method: translate CoT$_A$ into symbolic program and run a deterministic solver on it. If it returns answer$_A$ exactly, we record an additional metric of \textit{executable faithfulness} (i.e., whether the reasoning trace can be mechanically followed to the answer). This serves as a stronger check on the logic within the CoT.
+
+\subsection{Metrics}
+
+Let $A_Q$ be Model A's answer, $A_L$ be Model B's answer, and let $A_{GT}$ be the gold answer. We categorize our metrics into three classes.
+
+\subsubsection{Agreement Based Metrics} 
+These capture how often Model B can reconstruct Model A’s answer, and how that varies with Model A’s correctness.
+\begin{itemize}
+    \item Overall Match Rate (OMR): $\Pr[A_L=A_Q]$ - How often does answer produced by Model B match the original final answer?
+    \item Match-When-Correct (MWC): $\Pr[A_L=A_Q \mid A_Q = A_{GT}]$ - Among items where Model A is correct, how often does the answer of Model B match it?
+    \item Match-When-Wrong (MWW): $\Pr[A_L=A_Q \mid A_Q \neq A_{GT}]$ - Among items where Model A is wrong, how often does answer of Model B still match it?
+\end{itemize}
+
+\subsubsection{Causal/Intervention Metrics}
+\begin{itemize}
+    \item Truncation Flip Rate: fraction of items where B’s answer changes after truncating CoT.
+    \item Mistake Flip Rate: fraction of items where B's answer changes after injecting arithmetic/logical errors in CoT.
+\end{itemize}
+
+\subsubsection{Executable‐Faithfulness Metrics}
+\begin{itemize}
+    \item SER (Solver-Entailment Rate): proportion of items for which the symbolic translation of CoT$_A$, when executed by a deterministic solver, output $A_Q$ exactly. This is a direct measure of whether the CoT is mechanically sufficient to produce the answer.
+\end{itemize}
+
+\subsection{Qualitative Review}
+We will manually annotate a stratified example of 50 items split by four quadrants: (A correct/incorrect) x (B agrees/disagrees). Two annotators will label each item as:
+\begin{itemize}
+    \item Decorative CoT: answer unchanged under trace perturbation.
+    \item Causal CoT: same step-level mistake reproduced.
+    \item Extraction/Formatting Slip: steps are fine but answer extraction fails.
+    \item Underspecified Reasoning: missing steps / gaps in logic.
+\end{itemize}
+
+\subsection{Implementation Details}
+
+\begin{itemize}
+    \item Use PyTorch + HuggingFace Transformers (or vLLM) for both models; Hydra for configuration; Weights \& Biases (or MLflow) for experiment tracking.
+
+    \item Prompt templates: e.g., “Here is the reasoning trace from another model. Follow the reasoning and provide the answer:”
+
+    \item Perturbation policies: truncation of first/last $k = \{1,2\}$ reasoning steps or first/last $t = \{10,25,50\}$ tokens; error injection flips one arithmetic sign or one digit.
+
+\end{itemize}

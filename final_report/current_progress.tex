@@ -1,0 +1,82 @@
+\subsection{Checklist}
+% a checklist that describes things that have been done and things that are yet to be done
+\begin{itemize}
+    \item[\checkmark] \textbf{Literature Review and Method Proposal (Completed).}
+    \begin{itemize}
+        \item Conducted a comprehensive literature review on SRT and CoT faithfulness.
+        \item Finalized the research formulation: measuring reasoning--answer faithfulness using a two-model framework (Model~A = Qwen, Model~B = LLaMA).
+        \item Defined evaluation metrics (OMR, MWC, MWW, Flip Rates) and designed the inference–evaluation pipeline schema.
+    \end{itemize}
+
+    \item[\checkmark] \textbf{Dataset and Infrastructure Setup (In Progress).}
+    \begin{itemize}
+        \item Selected the DAPO-Math-17k dataset as the benchmark for multi-step reasoning.
+        \item Initialized repository structure and development environment (PyTorch, vLLM, Hydra, W\&B).
+        \item Implementing standardized data loader and preprocessing utilities for batched inference and logging.
+    \end{itemize}
+
+    \item[\phantom{\checkmark}] \textbf{Inference and Evaluation Pipeline (Next).}
+    \begin{itemize}
+        \item Build Model~A inference using vLLM with automatic CoT extraction and efficient batching.
+        \item Develop Model~B evaluation module that takes masked CoT input and reconstructs Model~A’s answer via prompt templates.
+        \item Integrate metric computation and generate baseline quantitative results (OMR, MWC, MWW).
+    \end{itemize}
+
+    \item[\phantom{\checkmark}] \textbf{Faithfulness Intervention and Qualitative Study (Planned).}
+    \begin{itemize}
+        \item Implement perturbation-based interventions: CoT truncation ($k=\{1,2\}$ steps) and error injection (arithmetic/logical flips).
+        \item Compute Truncation and Mistake Flip Rates to assess causal dependence between CoT and final answers.
+        \item Conduct manual annotation of 50 stratified samples to categorize decorative, causal, and underspecified reasoning patterns.
+    \end{itemize}
+
+    \item[\phantom{\checkmark}] \textbf{Evaluation Summary and Final Report (Planned).}
+    \begin{itemize}
+        \item Aggregate quantitative and qualitative findings and prepare visualization materials.
+        \item Finalize figures, tables, and analyses for the written report and presentation.
+        \item Verify reproducibility and submit the complete deliverables by the final deadline.
+    \end{itemize}
+\end{itemize}
+
+
+\subsection{Tasks division}
+% who in your team is working on each task
+\begin{itemize}
+    \item \textbf{Zhiyun Zhang}: Build a MATH dataset processing and inference pipeline for Model~A (Qwen) and Model~B (LLaMA), and analyze Model~A’s generated answers.
+    \item \textbf{Tony Li}: Establish baselines by providing Model~B with only the prompt and the CoT to produce the final answer, and evaluate its performance.
+    \item \textbf{Riyaz Ahuja}: Implement CoT truncation and perturbation mechanisms and analyze their effect on answer consistency.
+    \item \textbf{George Wu}: Conduct manual inspection of representative samples to characterize reasoning faithfulness.
+\end{itemize}
+
+
+\subsection{Timeline}
+% a timeline with specific milestones
+\begin{itemize}
+    \item \textbf{Phase 1} (by Nov 7): \textbf{ Literature Review and Method Proposal.}\\
+    Conducted a comprehensive review of prior works on SRT and CoT faithfulness.  
+    Finalized problem formulation, evaluation framework, and dataset specification.
+
+    \item \textbf{Phase 2} (by Nov 17): \textbf{ Pipeline and Baseline Implementation.}\\
+    Develop inference and evaluation pipeline for Qwen and LLaMA using PyTorch/vLLM.  
+    Standardize data format and enable baseline evaluation where Model~B reconstructs Model~A’s answers from CoTs.
+
+    \item \textbf{Phase 3} (by Nov 27): \textbf{ Faithfulness Intervention Study on $\text{CoT}_A$.}\\
+    Run experiments with perturbation-based interventions to test causal dependence between reasoning and final outputs.  
+    Compute OMR, MWC, MWW, and flip rates; perform qualitative inspection of reasoning behaviors.
+
+    \item \textbf{Phase 4} (by Dec 5): \textbf{ Evaluation and Final Report Preparation.}\\
+    Aggregate findings, visualize results, and finalize report and presentation materials.  
+    Verify reproducibility and submit the complete deliverables.
+\end{itemize}
+
+
+\subsection{Current Progress}
+% one or two paragraphs describing the current progress. We also ask that you share the github link to your repository in this section.
+
+Our team has completed the literature review and finalized the methodological design for evaluating chain-of-thought faithfulness.  
+The DAPO-Math-17k dataset has been selected, and the development environment is configured.  
+We are currently implementing the standardized data loader and schema integration into the inference pipeline.  
+The next milestone is to complete the Model~A/Model~B inference--evaluation loop and begin baseline metric computation.  
+Faithfulness intervention experiments and qualitative analysis will follow once the baseline pipeline is stable.  
+
+\noindent
+Project repository: \textbf{\url{https://github.com/daisy-zzy/10701-project}}
