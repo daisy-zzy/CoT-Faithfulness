@@ -53,14 +53,14 @@ python run_stage2_llama.py
 **Results from `outputs/stage2_llama.jsonl`**:
 ```
 === Agreement-based metrics ===
-Overall Match Rate (OMR):         0.1490
-Match-When-Correct (MWC):         0.9315
-Match-When-Wrong  (MWW):          0.0120
-[Counts] total=490, A_correct=73, A_wrong=417
+Overall Match Rate (OMR):         0.4772
+Match-When-Correct (MWC):         0.8121
+Match-When-Wrong  (MWW):          0.0902
+[Counts] total=526, A_correct=282, A_wrong=244
 === Accuracy vs Ground Truth ===
-Model A accuracy vs GT:           0.1377
-Model B accuracy vs GT:           0.5628
-(Legacy) Model B vs A agreement:  0.1490
+Model A accuracy vs GT:           0.5202
+Model B accuracy vs GT:           0.5696
+(Legacy) Model B vs A agreement:  0.4772
 ```
 
 ### Stage 3: Interventions
@@ -82,10 +82,10 @@ python run_stage3_interventions.py
 **Results from `outputs/stage3_interventions.jsonl`**:
 ```
 === Causal/Intervention Metrics ===
-Truncation Flip Rate:              0.5480
-[Counts] total=604, flipped=331
-Mistake Flip Rate:                 0.7472
-[Counts] total=625, flipped=467
+Truncation Flip Rate:              0.5182
+[Counts] total=631, flipped=327
+Mistake Flip Rate:                 0.7087
+[Counts] total=666, flipped=472
 ```
 
 ## Running the Full Pipeline
@@ -143,14 +143,6 @@ Options:
 │   └── pipeline.py              # Full pipeline orchestration
 └── outputs/                     # Output JSONL files
 ```
-
-## Key Features
-
-- **Batch Processing**: All interventions are applied in batches for efficiency
-- **Modular Design**: Each stage can be run independently
-- **Comprehensive Metrics**: Agreement-based and causal/intervention metrics
-- **Error Handling**: Graceful fallbacks for failed generations
-- **Progress Tracking**: tqdm progress bars for all stages
 
 ## Configuration
 
