@@ -15,7 +15,11 @@ class PromptTemplates:
             f"{COT_TAG_START}\n"
             "<your full reasoning here>\n"
             f"{COT_TAG_END}\n"
-            "Final Answer: <single final answer here>\n"
+            "Final Answer: <single final answer here>\n\n"
+            "IMPORTANT: Do NOT include your final answer in the reasoning section. "
+            "The reasoning should only contain the step-by-step thought process, "
+            "not the final answer itself. The final answer should only appear after "
+            "the reasoning tags.\n"
         )
 
 
