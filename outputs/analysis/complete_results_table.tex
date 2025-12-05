@@ -1,0 +1,45 @@
+
+\begin{table*}[t]
+\centering
+\caption{Complete Experimental Results. All values are mean $\pm$ standard error across 5000 problems with 4 rollouts each.
+Match Rate = P(Model B answer = Model A answer). Flip Rate = P(intervention answer $\neq$ baseline answer).}
+\label{tab:complete_results}
+\small
+\begin{tabular}{llccc}
+\toprule
+\textbf{Category} & \textbf{Condition} & \textbf{Accuracy (\%)} & \textbf{Match Rate (\%)} & \textbf{Flip Rate (\%)} \\
+\midrule
+Baseline & Model A (Qwen) & $81.4 \pm 0.6$ & - & - \\
+ & Model B No CoT & $13.4 \pm 0.4$ & - & - \\
+ & Model B + CoT () & $63.5 \pm 0.6$ & $84.8 \pm 0.5$ & $15.2 \pm 0.5$ \\
+\midrule
+Truncate First & k=1 & $63.8 \pm 0.6$ & $85.1 \pm 0.5$ & $21.2 \pm 0.5$ \\
+ & k=2 & $63.9 \pm 0.6$ & $85.1 \pm 0.5$ & $21.3 \pm 0.5$ \\
+ & k=3 & $64.1 \pm 0.6$ & $85.1 \pm 0.5$ & $21.3 \pm 0.5$ \\
+ & k=5 & $63.9 \pm 0.6$ & $85.0 \pm 0.5$ & $21.7 \pm 0.5$ \\
+\midrule
+Truncate Last & k=1 & $63.5 \pm 0.6$ & $83.1 \pm 0.5$ & $23.0 \pm 0.5$ \\
+ & k=2 & $63.1 \pm 0.6$ & $82.8 \pm 0.5$ & $23.5 \pm 0.5$ \\
+ & k=3 & $63.2 \pm 0.6$ & $82.6 \pm 0.5$ & $24.1 \pm 0.5$ \\
+ & k=5 & $62.9 \pm 0.6$ & $81.8 \pm 0.6$ & $24.4 \pm 0.5$ \\
+\midrule
+Truncate Contiguous & k=1 & $63.9 \pm 0.6$ & $84.9 \pm 0.5$ & $21.5 \pm 0.5$ \\
+ & k=2 & $63.5 \pm 0.6$ & $85.2 \pm 0.5$ & $21.8 \pm 0.5$ \\
+ & k=3 & $63.9 \pm 0.6$ & $85.1 \pm 0.5$ & $22.2 \pm 0.5$ \\
+ & k=5 & $63.9 \pm 0.6$ & $84.9 \pm 0.5$ & $21.9 \pm 0.5$ \\
+\midrule
+Truncate Random & 10% & $64.1 \pm 0.6$ & $85.3 \pm 0.5$ & $21.7 \pm 0.5$ \\
+ & 20% & $63.9 \pm 0.6$ & $84.9 \pm 0.5$ & $22.2 \pm 0.5$ \\
+ & 30% & $64.0 \pm 0.6$ & $85.1 \pm 0.5$ & $22.5 \pm 0.5$ \\
+ & 50% & $62.5 \pm 0.6$ & $82.5 \pm 0.5$ & $26.0 \pm 0.6$ \\
+\midrule
+Filler Replace & 10% & $64.3 \pm 0.6$ & $84.9 \pm 0.5$ & $22.2 \pm 0.5$ \\
+ & 20% & $64.2 \pm 0.6$ & $84.2 \pm 0.5$ & $23.4 \pm 0.5$ \\
+ & 30% & $63.5 \pm 0.6$ & $83.4 \pm 0.5$ & $24.5 \pm 0.5$ \\
+ & 50% & $61.2 \pm 0.6$ & $80.0 \pm 0.6$ & $29.1 \pm 0.6$ \\
+\midrule
+Error Injection & - & $45.8 \pm 0.7$ & $59.1 \pm 0.7$ & $44.9 \pm 0.7$ \\
+
+\bottomrule
+\end{tabular}
+\end{table*}

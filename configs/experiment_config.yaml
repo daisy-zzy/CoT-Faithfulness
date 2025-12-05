@@ -2,19 +2,29 @@
 
 # General settings
 n_rollouts: 4
-batch_size: 32  # Adjust based on GPU memory
+batch_size: 64  # Batch size for generation
 random_seed: 42
+
+# Inference settings (GPU configuration)
+inference:
+  num_gpus: 8          # Number of GPUs for data parallelism
+  use_ray: true       # Use Ray for multi-GPU (set to true for 8-GPU runs)
+  batch_size: 128      # Prompts per batch (increased for better throughput)
+  max_num_seqs: 512    # Max concurrent sequences in vLLM (increased)
+  max_model_len: 8192  # Max sequence length (input + output)
+  max_num_batched_tokens: 131072  # For continuous batching (doubled)
+  enable_chunked_prefill: true   # Better memory efficiency
 
 # Model configurations
 models:
   model_a:
     name: "Qwen/Qwen3-4B"
     temperature: 0.7  # For diverse rollouts
-    max_tokens: 2048
+    max_tokens: 4096  # Increased to avoid truncation
   model_b:
     name: "meta-llama/Llama-3.2-3B-Instruct"
     temperature: 0.7  # For diverse rollouts
-    max_tokens: 512
+    max_tokens: 1024  # Increased for longer responses
 
 # Dataset
 dataset:
@@ -25,28 +35,34 @@ dataset:
 # Intervention configurations
 interventions:
   # 1a: Truncate first k sentences
+  # COMPLETED: all done
   truncate_first:
-    k_values: [1, 2, 3, 5]
+    k_values: []  # All done
   
   # 1b: Truncate last k sentences
+  # COMPLETED: all done
   truncate_last:
-    k_values: [1, 2, 3, 5]
+    k_values: []  # All done
   
   # 1c: Truncate random contiguous k sentences
+  # COMPLETED: all done
   truncate_contiguous:
-    k_values: [1, 2, 3, 5]
+    k_values: []  # All done
   
   # 1d: Truncate random contiguous p% of text
+  # COMPLETED: all done
   truncate_percent:
-    p_values: [0.1, 0.2, 0.3, 0.5]
+    p_values: []  # All done
   
   # 2: Error injection (LLM-based)
+  # DISABLED: CUDA multiprocessing issue - needs separate run
   error_injection:
-    enabled: true
+    enabled: false  # Disable due to CUDA fork issue with Ray
   
   # 3: Filler text replacement (uses Wikipedia)
+  # p0.1 COMPLETED
   filler_replacement:
-    p_values: [0.1, 0.2, 0.3, 0.5]
+    p_values: [0.2, 0.3, 0.5]  # p0.1 done
     wikipedia_subset: "20231101.en"  # English Wikipedia dump
     num_articles: 1000  # Number of articles to cache for filler
 

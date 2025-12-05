@@ -29,6 +29,7 @@ BOXED_ANYWHERE = re.compile(r"\\boxed\{(.*?)}")
 # Ground-truth parsing
 # =====================
 
+
 def extract_boxed_answer(solution: str) -> Optional[str]:
     """
     Extract the content of the *last* \\boxed{...} in a LaTeX solution.
@@ -51,14 +52,18 @@ def extract_boxed_answer(solution: str) -> Optional[str]:
 # Model output CoT + answer
 # ==========================
 
+
 def extract_cot_and_answer(text: str) -> Tuple[Optional[str], Optional[str]]:
     """
     Extract CoT and final answer from a model's raw output.
 
-    Priority:
+    Priority for CoT:
       1) If there is an explicit <think>...</think> block, use that as CoT.
-      2) Otherwise, if we can find a 'Final Answer', treat the prefix
-         (everything before the last 'Final Answer') as CoT.
+      2) Otherwise, use everything before the answer marker as CoT.
+
+    Priority for answer:
+      1) Look for \boxed{...} (consistent with MATH dataset ground truth format)
+      2) Fall back to 'Final Answer: ...' pattern
     """
     if text is None:
         return None, None
@@ -71,30 +76,42 @@ def extract_cot_and_answer(text: str) -> Tuple[Optional[str], Optional[str]]:
     if m_cot:
         cot = m_cot.group(1).strip()
 
-    # -------- 2. Find the LAST 'Final Answer' line --------
+    # -------- 2. Find answer: prioritize \boxed{}, fall back to Final Answer --------
     ans: Optional[str] = None
-    matches = list(FINAL_PATTERN.finditer(text))
-    if matches:
-        last = matches[-1]
-        raw_ans = last.group(1)
-        ans = normalize_answer(raw_ans)
+    answer_start_pos: Optional[int] = None
 
-        # If we still don't have a CoT, fall back to "everything before Final Answer"
-        if cot is None:
-            cot_candidate = text[: last.start()].strip()
-            # Sometimes the model spuriously emits '</think>' at the very start.
-            cot_candidate = re.sub(r"^</?think>\s*", "", cot_candidate,
-                                   flags=re.IGNORECASE)
-            if cot_candidate:
-                cot = cot_candidate
+    # First try \boxed{...} (preferred, consistent with MATH dataset)
+    boxed_matches = list(BOXED_ANYWHERE.finditer(text))
+    if boxed_matches:
+        last_boxed = boxed_matches[-1]
+        raw_ans = last_boxed.group(1)
+        ans = normalize_answer(raw_ans)
+        answer_start_pos = last_boxed.start()
+
+    # Fall back to Final Answer pattern if no boxed found
+    if ans is None:
+        final_matches = list(FINAL_PATTERN.finditer(text))
+        if final_matches:
+            last = final_matches[-1]
+            raw_ans = last.group(1)
+            ans = normalize_answer(raw_ans)
+            answer_start_pos = last.start()
+
+    # If we still don't have a CoT, fall back to "everything before answer"
+    if cot is None and answer_start_pos is not None:
+        cot_candidate = text[:answer_start_pos].strip()
+        # Sometimes the model spuriously emits '</think>' at the very start.
+        cot_candidate = re.sub(r"^</?think>\s*", "", cot_candidate, flags=re.IGNORECASE)
+        if cot_candidate:
+            cot = cot_candidate
 
     return cot, ans
-
 
 
 # ====================
 # Answer normalization
 # ====================
+
 
 def normalize_answer(ans: str) -> str:
     """

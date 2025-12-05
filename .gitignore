@@ -1,3 +1,6 @@
+# Results
+outputs/**/*.jsonl
+
 # Python
 __pycache__/
 **/__pycache__/
@@ -39,12 +42,14 @@ ENV/
 *.swo
 *~
 .DS_Store
+xet/
 
 # Model cache
 .cache/
 models/
 *.bin
 *.safetensors
+hub/
 
 # Jupyter Notebook
 .ipynb_checkpoints
