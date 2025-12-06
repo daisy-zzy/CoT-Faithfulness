@@ -1,0 +1,14 @@
+
+
+
+
+\section{Related Works}
+\label{sec:headings}
+
+
+As previously notes, the rapid advancement of LLM reasoning capability in the past few years has primarily been the result of leveraging chain-of-thought (CoT) style prompting and self-reflective reasoning mechanisms. Namely, the seminal work by Wei et al. showcases that CoT prompting significantly boosts performance on multi-step tasks such as math, commonsense, and symbolic reasoning.
+\cite{wei2022chain} Moreover, as these reasoning systems scale and achieve widespread user adoption -- such as with OpenAI's ``o-series'' of models, which are explicitly trained to ``think'' before answering, with \textit{hidden} CoTs -- the trust users place in the underlying ``reasoning'' can be tested.\cite{openai_o1_systemcard_2024} Overall, this shift toward explicit reasoning traces underscores a broader trend of models no longer being merely asked to output answers, but rather to reason through structured chains, changing the very paradigm of how LLMs solve tasks.
+
+Nevertheless, these advances raise deeper questions regarding the faithfulness and monitorability of the generated reasoning traces. For instance, Baker et al. examine monitoring CoTs for reward-hacking behaviour and reveal a key risk: when optimization pressures are applied directly to reasoning traces, agents may learn to hide undesirable intent behind superficial or misleading CoTs. \cite{baker2025monitoring} This highlights the importance of the question of of chain-of-thought faithfulness: i.e. if the text-generated reasoning truly reflects the model’s internal computation, or is merely a post-hoc rationalization. Similarly, Korbak et al.\ (2025) extend this analysis, showing that monitorability of CoTs may diminish as models optimise and adapt, thus revealing a “monitorability tax.” \cite{korbak2025cot} And further driving this, on frontier-level models, recent works have shown that indeed, the reliability and faithfulness of the underlying reasoning of the models is not certain by any means, as frontier reasoning models have been shown experimentally to obfuscate or generate post-hoc rationalizations rather than engaging in true, honest reasoning chains. \cite{anthropic2025reasoning_models} 
+
+These works frame the existing gap: we can elicit reasoning and monitor reasoning traces -- but verifying that the chain of thought \textit{causally} supports the final answer remains an open problem. Our work addresses precisely that gap by proposing a two-model entailment test of reasoning faithfulness in self-training loops.

@@ -1,0 +1,50 @@
+\begin{thebibliography}{7}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Shafayat et~al.(2025)Shafayat, Tajwar, Salakhutdinov, Schneider, and Zanette]{shafayat2025largereasoningmodelsselftrain}
+Sheikh Shafayat, Fahim Tajwar, Ruslan Salakhutdinov, Jeff Schneider, and Andrea Zanette.
+\newblock Can large reasoning models self-train?, 2025.
+\newblock URL \url{https://arxiv.org/abs/2505.21444}.
+
+\bibitem[Lanham et~al.(2023)Lanham, Chen, Radhakrishnan, Steiner, Denison, Hernandez, Li, Durmus, Hubinger, Kernion, Lukošiūtė, Nguyen, Cheng, Joseph, Schiefer, Rausch, Larson, McCandlish, Kundu, Kadavath, Yang, Henighan, Maxwell, Telleen-Lawton, Hume, Hatfield-Dodds, Kaplan, Brauner, Bowman, and Perez]{lanham2023measuringfaithfulnesschainofthoughtreasoning}
+Tamera Lanham, Anna Chen, Ansh Radhakrishnan, Benoit Steiner, Carson Denison, Danny Hernandez, Dustin Li, Esin Durmus, Evan Hubinger, Jackson Kernion, Kamilė Lukošiūtė, Karina Nguyen, Newton Cheng, Nicholas Joseph, Nicholas Schiefer, Oliver Rausch, Robin Larson, Sam McCandlish, Sandipan Kundu, Saurav Kadavath, Shannon Yang, Thomas Henighan, Timothy Maxwell, Timothy Telleen-Lawton, Tristan Hume, Zac Hatfield-Dodds, Jared Kaplan, Jan Brauner, Samuel~R. Bowman, and Ethan Perez.
+\newblock Measuring faithfulness in chain-of-thought reasoning, 2023.
+\newblock URL \url{https://arxiv.org/abs/2307.13702}.
+
+\bibitem[Wei et~al.(2022)Wei, Wang, Schuurmans, Bosma, Ichter, Xia, Chi, Le, and Zhou]{wei2022chain}
+Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Brian Ichter, Fei Xia, Ed~H. Chi, Quoc~V. Le, and Denny Zhou.
+\newblock Chain-of-thought prompting elicits reasoning in large language models.
+\newblock In \emph{Advances in Neural Information Processing Systems 35 (NeurIPS 2022)}, 2022.
+\newblock URL \url{https://arxiv.org/abs/2201.11903}.
+\newblock arXiv preprint arXiv:2201.11903.
+
+\bibitem[OpenAI(2024)]{openai_o1_systemcard_2024}
+OpenAI.
+\newblock Openai o1 system card.
+\newblock Technical report, OpenAI, 2024.
+\newblock URL \url{https://cdn.openai.com/o1-system-card-20240917.pdf}.
+\newblock Dec 5 2024 version.
+
+\bibitem[Baker et~al.(2025)Baker, Huizinga, Gao, Dou, Guan, Mądry, Zaremba, Pachocki, and Farhi]{baker2025monitoring}
+Bowen Baker, Joost Huizinga, Leo Gao, Zehao Dou, Melody~Y. Guan, Aleksander Mądry, Wojciech Zaremba, Jakub Pachocki, and David Farhi.
+\newblock Monitoring reasoning models for misbehavior and the risks of promoting obfuscation.
+\newblock \emph{arXiv preprint}, arXiv:2503.11926, 2025.
+\newblock URL \url{https://arxiv.org/abs/2503.11926}.
+
+\bibitem[Korbak et~al.(2025)Korbak, Balesni, Barnes, Bengio, Benton, Bloom, Chen, Cooney, Dafoe, Dragan, Emmons, Evans, Farhi, Greenblatt, Hendrycks, Hobbhahn, Hubinger, Irving, Kokotajlo, Krakovna, Legg, Lindner, Luan, Mądry, Michael, Nanda, Orr, Pachocki, Perez, Phuong, Roger, Saxe, and Shlegeris]{korbak2025cot}
+Tomek Korbak, Mikita Balesni, Elizabeth Barnes, Yoshua Bengio, Joe Benton, Joseph Bloom, Mark Chen, Alan Cooney, Allan Dafoe, Anca Dragan, Scott Emmons, Owain Evans, David Farhi, Ryan Greenblatt, Dan Hendrycks, Marius Hobbhahn, Evan Hubinger, Geoff Irving, Daniel Kokotajlo, Victoria Krakovna, Shane Legg, David Lindner, David Luan, Aleksander Mądry, Julian Michael, Neel Nanda, Dave Orr, Jakub Pachocki, Ethan Perez, Mary Phuong, Fabien Roger, Joshua Saxe, and Buck Shlegeris.
+\newblock Chain of thought monitorability: A new and fragile opportunity for ai safety.
+\newblock \emph{arXiv preprint}, arXiv:2507.11473, 2025.
+\newblock URL \url{https://arxiv.org/abs/2507.11473}.
+
+\bibitem[Anthropic(2025)]{anthropic2025reasoning_models}
+Anthropic.
+\newblock Reasoning models don’t always say what they think.
+\newblock 2025.
+\newblock URL \url{https://assets.anthropic.com/m/71876fabef0f0ed4/original/reasoning_models_paper.pdf}.
+
+\end{thebibliography}

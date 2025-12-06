@@ -1,0 +1,45 @@
+
+\begin{table*}[t]
+\centering
+\caption{Complete Experimental Results. All values are mean $\pm$ standard error across 5000 problems with 4 rollouts each.
+OMR = Overall Match Rate P(B=A). MWC = Match When Correct. MWW = Match When Wrong. Flip Rate = P(intervention answer $\neq$ baseline answer).}
+\label{tab:complete_results}
+\small
+\begin{tabular}{llcccc}
+\toprule
+\textbf{Category} & \textbf{Condition} & \textbf{OMR (\%)} & \textbf{MWC (\%)} & \textbf{MWW (\%)} & \textbf{Flip Rate (\%)} \\
+\midrule
+Baseline & Model A (Qwen) & - & - & - & - \\
+ & Model B No CoT & - & - & - & - \\
+ & Model B + CoT () & $84.8 \pm 0.5$ & $90.3 \pm 0.5$ & $60.8 \pm 1.6$ & $15.2 \pm 0.5$ \\
+\midrule
+Truncate First & k=1 & $85.1 \pm 0.5$ & $90.6 \pm 0.4$ & $61.0 \pm 1.6$ & $21.2 \pm 0.5$ \\
+ & k=2 & $85.1 \pm 0.5$ & $90.6 \pm 0.5$ & $61.1 \pm 1.6$ & $21.3 \pm 0.5$ \\
+ & k=3 & $85.1 \pm 0.5$ & $90.7 \pm 0.4$ & $60.5 \pm 1.6$ & $21.3 \pm 0.5$ \\
+ & k=5 & $85.0 \pm 0.5$ & $90.4 \pm 0.5$ & $61.4 \pm 1.6$ & $21.7 \pm 0.5$ \\
+\midrule
+Truncate Last & k=1 & $83.1 \pm 0.5$ & $89.5 \pm 0.5$ & $55.3 \pm 1.6$ & $23.0 \pm 0.5$ \\
+ & k=2 & $82.8 \pm 0.5$ & $89.3 \pm 0.5$ & $54.4 \pm 1.7$ & $23.5 \pm 0.5$ \\
+ & k=3 & $82.6 \pm 0.5$ & $89.0 \pm 0.5$ & $54.9 \pm 1.6$ & $24.1 \pm 0.5$ \\
+ & k=5 & $81.8 \pm 0.6$ & $88.4 \pm 0.5$ & $52.9 \pm 1.7$ & $24.4 \pm 0.5$ \\
+\midrule
+Truncate Contiguous & k=1 & $84.9 \pm 0.5$ & $90.4 \pm 0.5$ & $60.9 \pm 1.6$ & $21.5 \pm 0.5$ \\
+ & k=2 & $85.2 \pm 0.5$ & $90.3 \pm 0.5$ & $62.5 \pm 1.6$ & $21.8 \pm 0.5$ \\
+ & k=3 & $85.1 \pm 0.5$ & $90.6 \pm 0.5$ & $61.0 \pm 1.6$ & $22.2 \pm 0.5$ \\
+ & k=5 & $84.9 \pm 0.5$ & $90.4 \pm 0.5$ & $61.0 \pm 1.6$ & $21.9 \pm 0.5$ \\
+\midrule
+Truncate Random & 10% & $85.3 \pm 0.5$ & $90.6 \pm 0.4$ & $62.1 \pm 1.6$ & $21.7 \pm 0.5$ \\
+ & 20% & $84.9 \pm 0.5$ & $90.4 \pm 0.5$ & $61.3 \pm 1.6$ & $22.2 \pm 0.5$ \\
+ & 30% & $85.1 \pm 0.5$ & $90.4 \pm 0.4$ & $61.6 \pm 1.6$ & $22.5 \pm 0.5$ \\
+ & 50% & $82.5 \pm 0.5$ & $88.0 \pm 0.5$ & $58.4 \pm 1.6$ & $26.0 \pm 0.6$ \\
+\midrule
+Filler Replace & 10% & $84.9 \pm 0.5$ & $90.7 \pm 0.4$ & $59.4 \pm 1.6$ & $22.2 \pm 0.5$ \\
+ & 20% & $84.2 \pm 0.5$ & $90.2 \pm 0.5$ & $58.4 \pm 1.6$ & $23.4 \pm 0.5$ \\
+ & 30% & $83.4 \pm 0.5$ & $89.3 \pm 0.5$ & $57.7 \pm 1.6$ & $24.5 \pm 0.5$ \\
+ & 50% & $80.0 \pm 0.6$ & $85.9 \pm 0.5$ & $54.3 \pm 1.6$ & $29.1 \pm 0.6$ \\
+\midrule
+Error Injection & - & $59.1 \pm 0.7$ & $63.4 \pm 0.8$ & $40.5 \pm 1.6$ & $44.9 \pm 0.7$ \\
+
+\bottomrule
+\end{tabular}
+\end{table*}
